@@ -48,7 +48,8 @@ async function sendMessage() {
     return;
   }
 
-  // === 正式模式：流式调用 DeepSeek ===
+  // === 正式模式 ===
+  const typingEl = showTypingIndicator();
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
@@ -57,104 +58,25 @@ async function sendMessage() {
     });
 
     if (!res.ok) {
-      const errText = await res.text();
-      let errMsg = '服务异常，请稍后重试';
-      try {
-        // 尝试从 SSE 错误中提取
-        const sseMatch = errText.match(/"error":"([^"]+)"/);
-        if (sseMatch) errMsg = sseMatch[1];
-      } catch {}
-      throw new Error(errMsg);
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error || '服务异常，请稍后重试');
     }
 
-    // 创建空气泡，准备流式填充
-    const { bubble, msgDiv } = createStreamingBubble();
-    let fullText = '';
-    let ctaText = null;
+    const data = await res.json();
+    const responseText = data.content?.[0]?.text || '抱歉，我没有理解你的问题，可以换个方式说吗？';
 
-    // 读取 SSE 流
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '';
+    typingEl.remove();
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop() || ''; // 保留不完整的最后一行
-
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const data = line.slice(6).trim();
-        if (!data || data === '[DONE]') continue;
-
-        try {
-          const json = JSON.parse(data);
-          const delta = json.choices?.[0]?.delta?.content;
-          if (delta) {
-            fullText += delta;
-            // 实时更新气泡（仅在内容足够时渲染以减少抖动）
-            updateStreamingBubble(bubble, fullText);
-            scrollToBottom();
-          }
-        } catch {}
-      }
-    }
-
-    // 流完成，最终渲染
-    const { cleanText, ctaText: detectedCta } = extractCta(fullText);
-    ctaText = detectedCta;
-    finalizeBubble(bubble, cleanText, ctaText);
-
-    state.history.push({ role: 'assistant', content: fullText });
+    const { cleanText, ctaText } = extractCta(responseText);
+    addMessage('assistant', cleanText, ctaText);
+    state.history.push({ role: 'assistant', content: responseText });
 
   } catch (error) {
+    typingEl.remove();
     showError(error.message || '网络连接失败，请检查后重试');
   } finally {
     state.isLoading = false;
     sendBtn.disabled = false;
-  }
-}
-
-// ===== 创建流式气泡 =====
-function createStreamingBubble() {
-  const msgDiv = document.createElement('div');
-  msgDiv.className = 'message assistant';
-  const bubble = document.createElement('div');
-  bubble.className = 'msg-bubble';
-  bubble.innerHTML = '<span class="streaming-cursor"></span>';
-  msgDiv.appendChild(bubble);
-  chatContainer.appendChild(msgDiv);
-  return { bubble, msgDiv };
-}
-
-// ===== 更新流式气泡内容 =====
-let streamUpdateTimer = null;
-function updateStreamingBubble(bubble, text) {
-  // 节流：每 80ms 最多更新一次，避免高频 DOM 操作
-  if (streamUpdateTimer) return;
-  streamUpdateTimer = setTimeout(() => {
-    streamUpdateTimer = null;
-    let html = marked.parse(text);
-    html = wrapDayCards(html);
-    bubble.innerHTML = html + '<span class="streaming-cursor"></span>';
-  }, 80);
-}
-
-// ===== 流完成，移除光标并添加 CTA =====
-function finalizeBubble(bubble, text, ctaText) {
-  if (streamUpdateTimer) { clearTimeout(streamUpdateTimer); streamUpdateTimer = null; }
-  let html = marked.parse(text);
-  html = wrapDayCards(html);
-  bubble.innerHTML = html;
-
-  if (ctaText) {
-    const ctaBar = document.createElement('div');
-    ctaBar.className = 'cta-bar';
-    ctaBar.innerHTML = `<p>${ctaText}</p><button class="cta-btn" onclick="openCtaModal(event)">加微信 · 领取完整方案</button>`;
-    bubble.appendChild(ctaBar);
   }
 }
 
