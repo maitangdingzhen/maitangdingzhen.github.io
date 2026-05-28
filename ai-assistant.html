@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 智能助手 · 栖野旅行</title>
+<meta name="description" content="栖野旅行 AI 智能旅行顾问——告诉我你的出行需求，我来帮你定制专属的武汉小众旅行方案。">
+<link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="chat-header">
+  <a href="index.html" class="back-link">← 返回首页</a>
+  <span class="chat-brand">栖野<span>·</span>AI 旅行助手</span>
+  <span style="width:60px"></span><!-- spacer for centering -->
+</header>
+
+<!-- ===== Chat Messages ===== -->
+<main class="chat-container" id="chatContainer">
+  <!-- Welcome message -->
+  <div class="welcome-msg" id="welcomeMsg">
+    <span class="icon">🗺️</span>
+    <h2>你好，我是栖野的 AI 旅行顾问</h2>
+    <p>告诉我你的出行计划——几个人、玩几天、喜欢什么风格——<br>我会为你定制一份专属的武汉小众旅行方案。</p>
+    <div class="welcome-suggestions">
+      <span class="welcome-chip" onclick="sendSuggestion('周末想去武汉拍照，2个人，2天1晚，预算2000')">📷 情侣旅拍周末</span>
+      <span class="welcome-chip" onclick="sendSuggestion('带家人去武汉玩3天，有老人有小孩，不想太累')">👨‍👩‍👧‍👦 家庭轻松游</span>
+      <span class="welcome-chip" onclick="sendSuggestion('一个人想去武汉吃地道美食，预算不限，有什么推荐？')">🍜 吃货朝圣之旅</span>
+      <span class="welcome-chip" onclick="sendSuggestion('武汉哪里拍照好看？想要复古胶片风的')">🎞️ 复古摄影攻略</span>
+    </div>
+  </div>
+</main>
+
+<!-- ===== Input Area ===== -->
+<div class="chat-input-area">
+  <input
+    type="text"
+    id="chatInput"
+    placeholder="输入你的出行需求..."
+    autocomplete="off"
+    onkeydown="if(event.key==='Enter')sendMessage()"
+  >
+  <button id="sendBtn" onclick="sendMessage()" title="发送">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+  </button>
+</div>
+
+<!-- ===== Scripts ===== -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="js/chat.js"></script>
+</body>
+</html>
