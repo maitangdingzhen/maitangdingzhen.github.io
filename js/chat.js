@@ -3,9 +3,8 @@
 // 部署后，将下方的 API_URL 替换为实际函数地址
 
 // ===== 配置 (部署 Netlify/Vercel 后修改此 URL) =====
-const API_URL = 'https://YOUR-NETLIFY-APP.netlify.app/api/chat';
-// 如果还没部署，可以先使用 DEMO_MODE 体验模拟对话
-const DEMO_MODE = true;
+const API_URL = 'https://lambent-moxie-cd41dc.netlify.app/api/chat';
+const DEMO_MODE = false;
 
 // ===== 状态 =====
 const state = {
