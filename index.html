@@ -142,11 +142,6 @@
     background: linear-gradient(135deg, #d4cfc4 0%, #c8c0b0 50%, #b8af9a 100%);
     display: flex; align-items: center; justify-content: center;
   }
-  .case-image-placeholder {
-    text-align: center; color: rgba(255,255,255,0.8);
-  }
-  .case-image-placeholder .icon { font-size: 3rem; display: block; margin-bottom: 8px; }
-  .case-image-placeholder .desc { font-size: 0.85rem; letter-spacing: 0.06em; }
   .case-tag {
     position: absolute; top: 16px; left: 16px;
     background: rgba(255,255,255,0.9); color: var(--sage-dark);
@@ -202,7 +197,6 @@
     background: linear-gradient(135deg, #c8c0b0 0%, #b8af9a 100%);
     display: flex; align-items: center; justify-content: center;
   }
-  .spot-image .img-placeholder { color: rgba(255,255,255,0.7); font-size: 0.9rem; letter-spacing: 0.06em; }
   .spot-style-tag {
     position: absolute; top: 12px; right: 12px;
     background: rgba(255,255,255,0.9); padding: 4px 12px;
@@ -235,7 +229,6 @@
     background: linear-gradient(135deg, #d4cfc4 0%, #c8c0b0 100%);
     display: flex; align-items: center; justify-content: center;
   }
-  .style-image .img-label { color: rgba(255,255,255,0.7); font-size: 0.9rem; letter-spacing: 0.08em; }
   .style-body { padding: 24px; }
   .style-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
   .style-subtitle { font-size: 0.85rem; color: var(--sage); margin-bottom: 16px; font-style: italic; }
@@ -417,12 +410,8 @@
       <!-- 案例 A：情侣 Citywalk + 旅拍 -->
       <!-- 来源 Skill: case-study-showcase → 案例 A -->
       <article class="case-card fade-in">
-        <div class="case-image">
+        <div class="case-image" style="background: url('images/case-couple.jpg') center/cover no-repeat;">
           <span class="case-tag">情侣定制</span>
-          <div class="case-image-placeholder">
-            <span class="icon">📷</span>
-            <span class="desc">黎黄陂路 · 梧桐树影下的民国电影感</span>
-          </div>
         </div>
         <div class="case-body">
           <h3 class="case-title serif">「江城旧梦」—— 一场像电影般的 Citywalk</h3>
@@ -444,12 +433,8 @@
       <!-- 案例 B：亲子温泉 + 竹林自然探索 -->
       <!-- 来源 Skill: case-study-showcase → 案例 B -->
       <article class="case-card fade-in">
-        <div class="case-image">
+        <div class="case-image" style="background: url('images/case-family.jpg') center/cover no-repeat;">
           <span class="case-tag">亲子家庭</span>
-          <div class="case-image-placeholder">
-            <span class="icon">🌿</span>
-            <span class="desc">咸宁 · 私汤民宿 + 星星竹海轻徒步</span>
-          </div>
         </div>
         <div class="case-body">
           <h3 class="case-title serif">「竹林里的周末」—— 一个四口之家的喘息之旅</h3>
@@ -503,9 +488,8 @@
       <!-- 复古/人文类景点 -->
       <!-- 来源 Skill: niche-spot-recommender → 风格匹配：复古/人文 -->
       <article class="spot-card fade-in" data-category="vintage">
-        <div class="spot-image">
+        <div class="spot-image" style="background: url('images/spot-bagong.jpg') center/cover no-repeat;">
           <span class="spot-style-tag">复古 · 人文</span>
-          <span class="img-placeholder">📷 巴公房子 · 洞庭街</span>
         </div>
         <div class="spot-body">
           <h3 class="spot-name serif">📍 巴公房子</h3>
@@ -530,9 +514,8 @@
       <!-- 自然/野趣类景点 -->
       <!-- 来源 Skill: niche-spot-recommender → 风格匹配：自然/野趣 -->
       <article class="spot-card fade-in" data-category="nature">
-        <div class="spot-image">
+        <div class="spot-image" style="background: url('images/spot-reed.jpg') center/cover no-repeat;">
           <span class="spot-style-tag">自然 · 野趣</span>
-          <span class="img-placeholder">🌾 汉口江滩三期 · 芦苇荡</span>
         </div>
         <div class="spot-body">
           <h3 class="spot-name serif">📍 汉口江滩三期 · 芦苇荡与旧船</h3>
@@ -555,9 +538,8 @@
       <!-- 工业/废墟类景点 -->
       <!-- 来源 Skill: niche-spot-recommender → 风格匹配：工业/废墟 -->
       <article class="spot-card fade-in" data-category="industrial">
-        <div class="spot-image">
+        <div class="spot-image" style="background: url('images/spot-bridge.jpg') center/cover no-repeat;">
           <span class="spot-style-tag">工业 · 废墟</span>
-          <span class="img-placeholder">🏗️ 杨泗港大桥下 · 橙色结构</span>
         </div>
         <div class="spot-body">
           <h3 class="spot-name serif">📍 杨泗港长江大桥 · 桥下空间</h3>
@@ -580,9 +562,8 @@
       <!-- 现代/极简类景点 -->
       <!-- 来源 Skill: niche-spot-recommender → 风格匹配：现代/极简 -->
       <article class="spot-card fade-in" data-category="modern">
-        <div class="spot-image">
+        <div class="spot-image" style="background: url('images/spot-museum.jpg') center/cover no-repeat;">
           <span class="spot-style-tag">现代 · 极简</span>
-          <span class="img-placeholder">🎨 琴台美术馆 · 银色梯田</span>
         </div>
         <div class="spot-body">
           <h3 class="spot-name serif">📍 琴台美术馆</h3>
@@ -605,9 +586,8 @@
       <!-- 复古/人文：古德寺 -->
       <!-- 来源 Skill: niche-spot-recommender → 示例 2 -->
       <article class="spot-card fade-in" data-category="vintage">
-        <div class="spot-image">
+        <div class="spot-image" style="background: url('images/spot-gude.jpg') center/cover no-repeat;">
           <span class="spot-style-tag">复古 · 人文</span>
-          <span class="img-placeholder">🕌 古德寺 · 回廊光影</span>
         </div>
         <div class="spot-body">
           <h3 class="spot-name serif">📍 古德寺 · 圆通宝殿回廊</h3>
@@ -629,9 +609,8 @@
 
       <!-- 自然/野趣：涨渡湖 -->
       <article class="spot-card fade-in" data-category="nature">
-        <div class="spot-image">
+        <div class="spot-image" style="background: url('images/spot-forest.jpg') center/cover no-repeat;">
           <span class="spot-style-tag">自然 · 野趣</span>
-          <span class="img-placeholder">🌲 涨渡湖 · 水上森林</span>
         </div>
         <div class="spot-body">
           <h3 class="spot-name serif">📍 涨渡湖水上森林</h3>
@@ -676,9 +655,7 @@
       <!-- 法式复古/电影感 -->
       <!-- 来源 Skill: photo-spot-selector → 场景 A -->
       <article class="style-card fade-in" data-category="french">
-        <div class="style-image">
-          <span class="img-label">🎞️ 黎黄陂路 · 法式电影感</span>
-        </div>
+        <div class="style-image" style="background: url('images/style-french.jpg') center/cover no-repeat;"></div>
         <div class="style-body">
           <h3 class="style-name serif">🎬 法式复古 · 电影感</h3>
           <p class="style-subtitle">"假装在巴黎左岸"</p>
@@ -704,9 +681,7 @@
       <!-- 日系清新 -->
       <!-- 来源 Skill: photo-spot-selector → 场景 B -->
       <article class="style-card fade-in" data-category="japanese">
-        <div class="style-image">
-          <span class="img-label">🌊 武汉关轮渡 · 日系清新</span>
-        </div>
+        <div class="style-image" style="background: url('images/style-japanese.jpg') center/cover no-repeat;"></div>
         <div class="style-body">
           <h3 class="style-name serif">☁️ 日系清新 · 海边既视感</h3>
           <p class="style-subtitle">"在江城的海风中奔跑"</p>
@@ -732,9 +707,7 @@
       <!-- 情绪大片/孤独感 -->
       <!-- 来源 Skill: photo-spot-selector → 场景 C -->
       <article class="style-card fade-in" data-category="moody">
-        <div class="style-image">
-          <span class="img-label">🏛️ 琴台美术馆 · 情绪大片</span>
-        </div>
+        <div class="style-image" style="background: url('images/style-moody.jpg') center/cover no-repeat;"></div>
         <div class="style-body">
           <h3 class="style-name serif">🌑 情绪大片 · 孤独感</h3>
           <p class="style-subtitle">"在巨大的建筑里，找到你最小的轮廓"</p>
