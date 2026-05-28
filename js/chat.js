@@ -23,61 +23,146 @@ async function sendMessage() {
   const text = chatInput.value.trim();
   if (!text || state.isLoading) return;
 
-  // 清除欢迎语
   if (welcomeMsg) welcomeMsg.remove();
 
-  // 渲染用户消息
   addMessage('user', text);
   state.history.push({ role: 'user', content: text });
   chatInput.value = '';
   chatInput.focus();
 
-  // 显示打字指示器
   state.isLoading = true;
   sendBtn.disabled = true;
-  const typingEl = showTypingIndicator();
 
-  try {
-    let responseText;
-
-    if (DEMO_MODE) {
-      // 演示模式：模拟回复（用于无需后端的展示）
-      await sleep(1500);
-      responseText = getDemoResponse(text);
-    } else {
-      // 正式模式：调用 Vercel Function
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history: state.history.slice(0, -1) })
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || '服务异常，请稍后重试');
-      }
-
-      const data = await res.json();
-      responseText = data.content?.[0]?.text || '抱歉，我没有理解你的问题，可以换个方式说吗？';
-    }
-
-    // 移除打字指示器
+  if (DEMO_MODE) {
+    // 演示模式（模拟流式输出）
+    await sleep(600);
+    const typingEl = showTypingIndicator();
+    await sleep(800);
     typingEl.remove();
-
-    // 检测 CTA 标记
+    const responseText = getDemoResponse(text);
     const { cleanText, ctaText } = extractCta(responseText);
-
-    // 渲染 AI 回复
     addMessage('assistant', cleanText, ctaText);
     state.history.push({ role: 'assistant', content: responseText });
+    state.isLoading = false;
+    sendBtn.disabled = false;
+    return;
+  }
+
+  // === 正式模式：流式调用 DeepSeek ===
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: state.history.slice(0, -1) })
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      let errMsg = '服务异常，请稍后重试';
+      try {
+        // 尝试从 SSE 错误中提取
+        const sseMatch = errText.match(/"error":"([^"]+)"/);
+        if (sseMatch) errMsg = sseMatch[1];
+      } catch {}
+      throw new Error(errMsg);
+    }
+
+    // 创建空气泡，准备流式填充
+    const { bubble, msgDiv } = createStreamingBubble();
+    let fullText = '';
+    let ctaText = null;
+
+    // 读取 SSE 流
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || ''; // 保留不完整的最后一行
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6).trim();
+        if (!data || data === '[DONE]') continue;
+
+        try {
+          const json = JSON.parse(data);
+          const delta = json.choices?.[0]?.delta?.content;
+          if (delta) {
+            fullText += delta;
+            // 实时更新气泡（仅在内容足够时渲染以减少抖动）
+            updateStreamingBubble(bubble, fullText);
+            scrollToBottom();
+          }
+        } catch {}
+      }
+    }
+
+    // 流完成，最终渲染
+    const { cleanText, ctaText: detectedCta } = extractCta(fullText);
+    ctaText = detectedCta;
+    finalizeBubble(bubble, cleanText, ctaText);
+
+    state.history.push({ role: 'assistant', content: fullText });
 
   } catch (error) {
-    typingEl.remove();
     showError(error.message || '网络连接失败，请检查后重试');
   } finally {
     state.isLoading = false;
     sendBtn.disabled = false;
   }
+}
+
+// ===== 创建流式气泡 =====
+function createStreamingBubble() {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'message assistant';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = '<span class="streaming-cursor"></span>';
+  msgDiv.appendChild(bubble);
+  chatContainer.appendChild(msgDiv);
+  return { bubble, msgDiv };
+}
+
+// ===== 更新流式气泡内容 =====
+let streamUpdateTimer = null;
+function updateStreamingBubble(bubble, text) {
+  // 节流：每 80ms 最多更新一次，避免高频 DOM 操作
+  if (streamUpdateTimer) return;
+  streamUpdateTimer = setTimeout(() => {
+    streamUpdateTimer = null;
+    let html = marked.parse(text);
+    html = wrapDayCards(html);
+    bubble.innerHTML = html + '<span class="streaming-cursor"></span>';
+  }, 80);
+}
+
+// ===== 流完成，移除光标并添加 CTA =====
+function finalizeBubble(bubble, text, ctaText) {
+  if (streamUpdateTimer) { clearTimeout(streamUpdateTimer); streamUpdateTimer = null; }
+  let html = marked.parse(text);
+  html = wrapDayCards(html);
+  bubble.innerHTML = html;
+
+  if (ctaText) {
+    const ctaBar = document.createElement('div');
+    ctaBar.className = 'cta-bar';
+    ctaBar.innerHTML = `<p>${ctaText}</p><button class="cta-btn" onclick="openCtaModal(event)">加微信 · 领取完整方案</button>`;
+    bubble.appendChild(ctaBar);
+  }
+}
+
+// ===== 包裹行程日卡片 =====
+function wrapDayCards(html) {
+  html = html.replace(/<h3>📅[\s\S]*?(?=<h3>📅|$)/g, m => `<div class="day-card">${m}</div>`);
+  html = html.replace(/(<h2>📅[\s\S]*?)(?=<h2>|$)/g, m => `<div class="day-card">${m}</div>`);
+  return html;
 }
 
 // ===== 快捷建议点击 =====
@@ -95,20 +180,8 @@ function addMessage(role, rawText, ctaText) {
   bubble.className = 'msg-bubble';
 
   if (role === 'assistant') {
-    // Markdown 渲染
     let html = marked.parse(rawText);
-
-    // 后处理：每日行程包裹为卡片
-    html = html.replace(
-      /<h3>📅\s*(Day \d|第\d天)[\s\S]*?(?=<h3>📅|$)/g,
-      (match) => `<div class="day-card">${match}</div>`
-    );
-    // 也处理 h2 级别的 Day 标题后面紧跟的内容
-    html = html.replace(
-      /(<h2>📅[\s\S]*?)(?=<h2>|$)/g,
-      (match) => `<div class="day-card">${match}</div>`
-    );
-
+    html = wrapDayCards(html);
     bubble.innerHTML = html;
 
     // CTA 引导条

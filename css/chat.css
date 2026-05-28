@@ -173,6 +173,18 @@ body {
 .chat-input-area button:hover { background: var(--sage-dark); transform: scale(1.05); }
 .chat-input-area button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
 
+/* ===== Streaming Cursor ===== */
+.streaming-cursor {
+  display: inline-block; width: 2px; height: 1em;
+  background: var(--sage); margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 0.8s infinite;
+}
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 /* ===== Error Message ===== */
 .error-msg {
   align-self: center; padding: 12px 20px; background: #fff5f5;
