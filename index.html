@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>栖野旅行 · 武汉高端定制旅行 | 小众秘境 × 专业旅拍</title>
+<meta name="description" content="栖野旅行专注武汉及周边高端定制旅行。拒绝大众景点，只带你去本地人私藏的小众秘境，搭配专业摄影指导，让每一次出发都像一部电影。">
+<style>
+  /* ===== Reset & Base ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    color: #2c2c2c;
+    background: #faf8f4;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Typography ===== */
+  .serif { font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "SimSun", "Songti SC", Georgia, serif; }
+  h1, h2, h3, .section-title, .brand-name, .spot-name, .case-title, blockquote { font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "SimSun", "Songti SC", Georgia, serif; }
+
+  /* ===== Color Variables ===== */
+  :root {
+    --ink: #2c2c2c;
+    --ink-light: #5c5c5c;
+    --warm-white: #faf8f4;
+    --cream: #f3efe8;
+    --sage: #6b8a5a;
+    --sage-dark: #4a633b;
+    --sage-light: #e8efe3;
+    --rust: #b8754a;
+    --gold: #c9a96e;
+    --gold-light: #f5eedb;
+    --border: #e5dfd5;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  /* ===== Navigation ===== */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .nav.scrolled { box-shadow: var(--shadow-sm); }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between; height: 72px;
+  }
+  .nav-brand { font-size: 1.4rem; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: 0.05em; }
+  .nav-brand span { color: var(--sage); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-light); font-size: 0.95rem;
+    transition: color 0.2s; position: relative; letter-spacing: 0.03em;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--sage); transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--sage); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--sage); color: #fff; padding: 10px 24px;
+    border-radius: 24px; text-decoration: none; font-size: 0.9rem;
+    transition: all 0.3s ease; letter-spacing: 0.03em;
+  }
+  .nav-cta:hover { background: var(--sage-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(107,138,90,0.3); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px 0; transition: 0.3s; }
+
+  /* ===== Section Common ===== */
+  .section { padding: 100px 32px; }
+  .section-inner { max-width: 1120px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; font-size: 0.8rem; letter-spacing: 0.15em;
+    color: var(--sage); text-transform: uppercase; margin-bottom: 16px;
+    border-bottom: 2px solid var(--sage-light); padding-bottom: 6px;
+  }
+  .section-title { font-size: 2.4rem; font-weight: 700; color: var(--ink); margin-bottom: 16px; letter-spacing: 0.04em; line-height: 1.3; }
+  .section-subtitle { font-size: 1.1rem; color: var(--ink-light); margin-bottom: 48px; max-width: 560px; line-height: 1.8; }
+
+  /* ===== Hero Section ===== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 32px 80px;
+    background: linear-gradient(180deg, #faf8f4 0%, #f0ece3 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(107,138,90,0.06) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -30%; left: -15%;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%);
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 720px; }
+  .hero-tag {
+    display: inline-block; font-size: 0.85rem; letter-spacing: 0.2em;
+    color: var(--sage); margin-bottom: 24px;
+  }
+  .hero h1 { font-size: 3.6rem; font-weight: 700; line-height: 1.25; margin-bottom: 24px; letter-spacing: 0.04em; }
+  .hero h1 em { font-style: normal; color: var(--sage); }
+  .hero-desc { font-size: 1.15rem; color: var(--ink-light); margin-bottom: 40px; line-height: 1.9; }
+  .hero-values { display: flex; gap: 40px; justify-content: center; margin-bottom: 48px; flex-wrap: wrap; }
+  .hero-value-item { text-align: center; }
+  .hero-value-item .icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+  .hero-value-item .label { font-size: 0.85rem; color: var(--ink-light); letter-spacing: 0.06em; }
+  .btn {
+    display: inline-block; padding: 16px 40px; border-radius: 30px;
+    font-size: 1rem; font-weight: 600; text-decoration: none; letter-spacing: 0.04em;
+    cursor: pointer; border: none; transition: all 0.3s ease;
+  }
+  .btn-primary { background: var(--sage); color: #fff; }
+  .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(107,138,90,0.35); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--sage); color: var(--sage); }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* ===== Case Study Section ===== */
+  .cases { background: #fff; }
+  .case-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 40px; }
+  .case-card {
+    border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--warm-white);
+  }
+  .case-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .case-image {
+    height: 280px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #d4cfc4 0%, #c8c0b0 50%, #b8af9a 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .case-tag {
+    position: absolute; top: 16px; left: 16px;
+    background: rgba(255,255,255,0.9); color: var(--sage-dark);
+    padding: 6px 16px; border-radius: 20px; font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+  .case-body { padding: 32px; }
+  .case-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .case-meta { font-size: 0.85rem; color: var(--ink-light); margin-bottom: 16px; }
+  .case-story { font-size: 0.95rem; color: var(--ink-light); margin-bottom: 20px; line-height: 1.8; }
+  .case-highlight {
+    background: var(--sage-light); border-radius: var(--radius-sm);
+    padding: 16px 20px; margin-bottom: 20px;
+  }
+  .case-highlight-label { font-size: 0.8rem; font-weight: 600; color: var(--sage-dark); margin-bottom: 6px; letter-spacing: 0.06em; }
+  .case-highlight p { font-size: 0.9rem; color: var(--ink); font-style: italic; }
+  .case-testimonial {
+    border-left: 3px solid var(--gold); padding-left: 16px;
+    font-size: 0.9rem; color: var(--ink-light); font-style: italic; line-height: 1.7;
+  }
+  .case-testimonial .author { display: block; margin-top: 6px; font-style: normal; font-size: 0.8rem; color: var(--sage); }
+
+  /* ===== CTA Inline ===== */
+  .cta-inline {
+    background: var(--gold-light); border-radius: var(--radius);
+    padding: 28px 32px; margin: 32px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .cta-inline p { font-size: 0.95rem; color: var(--ink); line-height: 1.7; flex: 1; min-width: 240px; }
+  .cta-inline p strong { color: var(--rust); }
+  .cta-inline .btn { flex-shrink: 0; font-size: 0.9rem; padding: 12px 28px; }
+
+  /* ===== Filter Chips ===== */
+  .filter-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .filter-chip {
+    padding: 10px 24px; border-radius: 24px; font-size: 0.9rem;
+    border: 1.5px solid var(--border); background: #fff; color: var(--ink-light);
+    cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.03em;
+  }
+  .filter-chip:hover { border-color: var(--sage); color: var(--sage); }
+  .filter-chip.active { background: var(--sage); color: #fff; border-color: var(--sage); }
+
+  /* ===== Spot Cards ===== */
+  .spots { background: var(--cream); }
+  .spot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; }
+  .spot-card {
+    background: #fff; border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow-sm); transition: all 0.3s ease;
+  }
+  .spot-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .spot-image {
+    height: 220px; position: relative;
+    background: linear-gradient(135deg, #c8c0b0 0%, #b8af9a 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .spot-style-tag {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.9); padding: 4px 12px;
+    border-radius: 16px; font-size: 0.75rem; letter-spacing: 0.06em; color: var(--sage-dark);
+  }
+  .spot-body { padding: 24px; }
+  .spot-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+  .spot-alias { font-size: 0.85rem; color: var(--sage); margin-bottom: 12px; font-style: italic; }
+  .spot-reason { font-size: 0.9rem; color: var(--ink-light); margin-bottom: 16px; line-height: 1.7; }
+  .spot-detail { margin-bottom: 12px; }
+  .spot-detail-label { font-size: 0.78rem; font-weight: 600; color: var(--rust); letter-spacing: 0.06em; margin-bottom: 4px; }
+  .spot-detail p { font-size: 0.88rem; color: var(--ink-light); line-height: 1.6; }
+  .spot-cta {
+    margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .spot-cta .micro-cta { font-size: 0.82rem; color: var(--sage); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; transition: color 0.2s; }
+  .spot-cta .micro-cta:hover { color: var(--sage-dark); }
+
+  /* ===== Photo Guide Section ===== */
+  .photo-guide { background: #fff; }
+  .style-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; }
+  .style-card {
+    background: var(--warm-white); border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow-sm); transition: all 0.3s ease;
+  }
+  .style-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .style-image {
+    height: 200px; position: relative;
+    background: linear-gradient(135deg, #d4cfc4 0%, #c8c0b0 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .style-body { padding: 24px; }
+  .style-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+  .style-subtitle { font-size: 0.85rem; color: var(--sage); margin-bottom: 16px; font-style: italic; }
+  .style-info { margin-bottom: 10px; }
+  .style-info-label { font-size: 0.78rem; font-weight: 600; color: var(--rust); letter-spacing: 0.06em; }
+  .style-info p { font-size: 0.88rem; color: var(--ink-light); line-height: 1.6; }
+
+  /* ===== FAQ Section ===== */
+  .faq { background: var(--cream); }
+  .faq-list { max-width: 780px; margin: 0 auto; }
+  .faq-item {
+    background: #fff; border-radius: var(--radius-sm); padding: 28px 32px;
+    margin-bottom: 16px; box-shadow: var(--shadow-sm); cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .faq-item:hover { box-shadow: var(--shadow-md); }
+  .faq-q { font-size: 1.05rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q .arrow { font-size: 0.8rem; color: var(--sage); transition: transform 0.3s ease; flex-shrink: 0; }
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.4s ease; }
+  .faq-item.open .faq-a { max-height: 400px; margin-top: 16px; }
+  .faq-a p { font-size: 0.92rem; color: var(--ink-light); line-height: 1.8; }
+
+  /* ===== About Section ===== */
+  .about { background: #fff; }
+  .about-content { max-width: 640px; }
+  .about-content p { font-size: 1.05rem; color: var(--ink-light); margin-bottom: 20px; line-height: 1.9; }
+  .about-values-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 32px; }
+  .about-values-list li {
+    padding: 16px 20px; background: var(--sage-light); border-radius: var(--radius-sm);
+    font-size: 0.9rem; text-align: center; color: var(--sage-dark);
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    background: #1e1e1c; color: rgba(255,255,255,0.7); padding: 80px 32px 40px;
+  }
+  .footer-inner { max-width: 1120px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { font-size: 1.5rem; color: #fff; font-weight: 700; margin-bottom: 16px; font-family: "Noto Serif SC", serif; }
+  .footer-desc { font-size: 0.9rem; line-height: 1.8; margin-bottom: 20px; }
+  .footer-heading { font-size: 0.85rem; color: #fff; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 16px; text-transform: uppercase; }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 0.8rem; }
+  .footer-cta {
+    background: linear-gradient(135deg, rgba(107,138,90,0.2), rgba(201,169,110,0.15));
+    border: 1px solid rgba(201,169,110,0.3); border-radius: var(--radius);
+    padding: 28px 32px; margin-bottom: 48px; text-align: center;
+  }
+  .footer-cta h4 { font-size: 1.3rem; color: #fff; margin-bottom: 8px; }
+  .footer-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+  .footer-social { display: flex; gap: 16px; justify-content: center; margin-top: 16px; }
+  .footer-social span { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+
+  /* ===== CTA Modal ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: #fff; border-radius: var(--radius); padding: 48px 40px;
+    max-width: 480px; width: 90%; position: relative; box-shadow: var(--shadow-lg);
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px; background: none; border: none;
+    font-size: 1.5rem; cursor: pointer; color: var(--ink-light); padding: 4px 8px;
+  }
+  .modal h3 { font-size: 1.5rem; margin-bottom: 8px; }
+  .modal p { font-size: 0.9rem; color: var(--ink-light); margin-bottom: 24px; line-height: 1.7; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+  .form-group input {
+    width: 100%; padding: 12px 16px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); font-size: 0.95rem; transition: border-color 0.2s;
+    background: var(--warm-white);
+  }
+  .form-group input:focus { outline: none; border-color: var(--sage); }
+  .form-submit { width: 100%; padding: 14px; margin-top: 8px; }
+  .form-note { font-size: 0.78rem; color: var(--ink-light); margin-top: 12px; text-align: center; line-height: 1.6; }
+
+  /* ===== Animations ===== */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0;
+      background: rgba(250,248,244,0.98); padding: 24px 32px; gap: 20px; border-bottom: 1px solid var(--border);
+    }
+    .nav-toggle { display: block; }
+    .nav-cta { display: none; }
+    .nav-cta.mobile-show { display: inline-block; }
+    .hero h1 { font-size: 2.4rem; }
+    .section-title { font-size: 1.8rem; }
+    .section { padding: 64px 20px; }
+    .case-grid, .spot-grid, .style-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-values { gap: 24px; }
+    .cta-inline { flex-direction: column; text-align: center; }
+    .about-values-list { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAVIGATION ==================== -->
+<!-- 调用 Skill: 无（页面导航结构） -->
+<nav class="nav" id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-brand serif">栖野<span>·</span>旅行</a>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#spots">小众景点</a></li>
+      <li><a href="#photo-guide">摄影攻略</a></li>
+      <li><a href="#about">关于我们</a></li>
+      <li><a href="#faq">常见问题</a></li>
+    </ul>
+    <a href="#footer-cta" class="nav-cta" id="navCta">预约咨询</a>
+  </div>
+</nav>
+
+<!-- ==================== HERO (首页) ==================== -->
+<!-- 调用 Skill: 无（品牌价值主张 + CTA 植入点，lead-capture-closing 的触发场景在下方 CTA 按钮和 modal 中体现） -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <p class="hero-tag serif">QIYO TRAVEL · 栖 野 旅 行</p>
+    <h1 class="serif">在武汉<br>发现<em>只有本地人知道</em>的秘境</h1>
+    <p class="hero-desc">
+      拒绝排队打卡的人山人海，我们只带你去梧桐树影下的老租界、<br>
+      江边废弃码头的落日、深山古寺的光影回廊。<br>
+      每一条路线都由本地探索家亲手打磨，每一次出发都为你配好专业摄影指导。
+    </p>
+    <div class="hero-values">
+      <div class="hero-value-item">
+        <span class="icon">🗺️</span>
+        <span class="label">纯小众路线</span>
+      </div>
+      <div class="hero-value-item">
+        <span class="icon">📷</span>
+        <span class="label">专业摄影指导</span>
+      </div>
+      <div class="hero-value-item">
+        <span class="icon">🤝</span>
+        <span class="label">1对1定制服务</span>
+      </div>
+      <div class="hero-value-item">
+        <span class="icon">🚫</span>
+        <span class="label">0隐形消费</span>
+      </div>
+    </div>
+    <div class="hero-btns">
+      <!-- CTA 按钮 → 点击触发 lead-capture-closing modal -->
+      <a href="#" class="btn btn-primary" onclick="openCtaModal(event)">获取定制方案</a>
+      <a href="#spots" class="btn btn-outline">探索小众秘境</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CASE STUDIES (案例展示) ==================== -->
+<!-- 调用 Skill: case-study-showcase -->
+<section class="section cases" id="cases">
+  <div class="section-inner">
+    <span class="section-label">✦ 真实案例</span>
+    <h2 class="section-title serif">每一段旅程，都是一个独特的故事</h2>
+    <p class="section-subtitle">
+      我们不卖千篇一律的行程表。以下是我们为不同旅行者定制的真实经历——每一次出发，都按照你的节奏来。
+    </p>
+
+    <div class="case-grid">
+      <!-- 案例 A：情侣 Citywalk + 旅拍 -->
+      <!-- 来源 Skill: case-study-showcase → 案例 A -->
+      <article class="case-card fade-in">
+        <div class="case-image" style="background: url('images/case-couple.jpg') center/cover no-repeat;">
+          <span class="case-tag">情侣定制</span>
+        </div>
+        <div class="case-body">
+          <h3 class="case-title serif">「江城旧梦」—— 一场像电影般的 Citywalk</h3>
+          <p class="case-meta">客户：上海情侣 · 2天1晚 · 人均 ¥1,200</p>
+          <p class="case-story">
+            一对来自上海的恋人，厌倦了标准化的景区打卡。他们说："我们想去没人知道的巷子，拍出复古胶片的质感。"于是，我们跳过了黄鹤楼和户部巷，帮他们设计了一条沉浸式的老汉口路线。
+          </p>
+          <div class="case-highlight">
+            <p class="case-highlight-label">✦ 行程亮点</p>
+            <p>清晨从山海关路的"过早"开始——热干面配蛋酒，和本地人坐同一条板凳。午后在黎黄陂路的老洋房咖啡馆发呆，下午四点的阳光穿过梧桐叶洒在百年红砖墙上。一小时的专属旅拍，捕捉在洞庭街斑马线上回眸的瞬间。</p>
+          </div>
+          <blockquote class="case-testimonial">
+            "完全不是那种赶鸭子的旅游，照片发朋友圈被赞爆了，朋友们都问是不是去了欧洲。其实我们就在汉口，那种民国电影感真的绝了。"
+            <span class="author">—— 来自客户 Miranda，上海</span>
+          </blockquote>
+        </div>
+      </article>
+
+      <!-- 案例 B：亲子温泉 + 竹林自然探索 -->
+      <!-- 来源 Skill: case-study-showcase → 案例 B -->
+      <article class="case-card fade-in">
+        <div class="case-image" style="background: url('images/case-family.jpg') center/cover no-repeat;">
+          <span class="case-tag">亲子家庭</span>
+        </div>
+        <div class="case-body">
+          <h3 class="case-title serif">「竹林里的周末」—— 一个四口之家的喘息之旅</h3>
+          <p class="case-meta">客户：北京家庭（2大2小）· 3天2晚 · 人均 ¥1,800</p>
+          <p class="case-story">
+            一对在北京工作的夫妻，带着5岁和8岁的孩子。需求很简单也很奢侈："周末想逃离城市，不想太累、不想排队、不想大包小包赶路。"我们为他们安排了一次真正的放松——全程专车接送，无需操心任何细节。
+          </p>
+          <div class="case-highlight">
+            <p class="case-highlight-label">✦ 行程亮点</p>
+            <p>入住咸宁温泉私汤民宿，院子自带烧烤架。第二天清晨，在星星竹海安排了一场"竹林寻宝"游戏——孩子们在自然中自由奔跑，大人在竹林吊床上喝茶翻书。司机师傅全程驻点，帮忙搬婴儿车、准备热茶。</p>
+          </div>
+          <blockquote class="case-testimonial">
+            "两个孩子玩疯了，大人也真正放松了下来。司机大哥还主动帮忙搬婴儿车和行李，服务细节让我们特别感动。这种不操心的旅行，对我们有孩子的家庭太重要了。"
+            <span class="author">—— 来自客户 陈先生，北京</span>
+          </blockquote>
+        </div>
+      </article>
+    </div>
+
+    <!-- CTA 植入点：案例下方自然引导 -->
+    <!-- 调用 Skill: lead-capture-closing → 场景 1 "用户满意方案，顺势索要微信" -->
+    <div class="cta-inline fade-in">
+      <p>
+        <strong>每一段旅程都是独一无二的。</strong>如果你也想要这样专属的定制路线，告诉我们你的时间和人数，我们会在24小时内为你呈上一份免费初案。
+      </p>
+      <a href="#" class="btn btn-primary" onclick="openCtaModal(event)">免费获取初案</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== NICHE SPOTS (小众景点推荐) ==================== -->
+<!-- 调用 Skill: niche-spot-recommender -->
+<section class="section spots" id="spots">
+  <div class="section-inner">
+    <span class="section-label">✦ 在地探索</span>
+    <h2 class="section-title serif">武汉真正的玩法，都藏在这些地方</h2>
+    <p class="section-subtitle">
+      我们会先了解你的偏好，然后精准推荐。选一个你喜欢的风格，看看武汉不为人知的另一面。
+    </p>
+
+    <!-- 风格筛选器：映射 niche-spot-recommender 的风格分类 -->
+    <div class="filter-bar" id="spotFilters">
+      <button class="filter-chip active" data-filter="all">全部</button>
+      <button class="filter-chip" data-filter="vintage">复古 · 人文</button>
+      <button class="filter-chip" data-filter="nature">自然 · 野趣</button>
+      <button class="filter-chip" data-filter="industrial">工业 · 废墟</button>
+      <button class="filter-chip" data-filter="modern">现代 · 极简</button>
+    </div>
+
+    <div class="spot-grid" id="spotGrid">
+      <!-- 复古/人文类景点 -->
+      <!-- 来源 Skill: niche-spot-recommender → 风格匹配：复古/人文 -->
+      <article class="spot-card fade-in" data-category="vintage">
+        <div class="spot-image" style="background: url('images/spot-bagong.jpg') center/cover no-repeat;">
+          <span class="spot-style-tag">复古 · 人文</span>
+        </div>
+        <div class="spot-body">
+          <h3 class="spot-name serif">📍 巴公房子</h3>
+          <p class="spot-alias">"武汉版武康大楼"</p>
+          <!-- niche-spot-recommender 输出结构: 推荐理由 -->
+          <p class="spot-reason">汉口租界区的百年地标，三角形的建筑在梧桐掩映下如同时光切片。清晨的光线最温柔，几乎没有游客，只有遛狗的老人和穿行的单车。</p>
+          <div class="spot-detail">
+            <p class="spot-detail-label">📸 独家机位</p>
+            <p>站在鄱阳街与洞庭街的三角路口，用长焦镜头从斑马线对面拍摄。建议取半身，让红砖墙和法式窗棂成为背景。或者走到背后的合作路，利用楼梯间拍出纵深故事感。</p>
+          </div>
+          <div class="spot-detail">
+            <p class="spot-detail-label">💡 实用贴士</p>
+            <p>清晨 7:30-9:00 人最少、光最佳。地铁三阳路站下车后步行 10 分钟。周边黎黄陂路、青岛路可一并逛完，建议留 2 小时。</p>
+          </div>
+          <!-- CTA 微植入：每个景点末尾引导 -->
+          <div class="spot-cta">
+            <span class="micro-cta" onclick="openCtaModal(event)">想要更多复古风秘境？领取《武汉隐秘地图》→</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 自然/野趣类景点 -->
+      <!-- 来源 Skill: niche-spot-recommender → 风格匹配：自然/野趣 -->
+      <article class="spot-card fade-in" data-category="nature">
+        <div class="spot-image" style="background: url('images/spot-reed.jpg') center/cover no-repeat;">
+          <span class="spot-style-tag">自然 · 野趣</span>
+        </div>
+        <div class="spot-body">
+          <h3 class="spot-name serif">📍 汉口江滩三期 · 芦苇荡与旧船</h3>
+          <p class="spot-alias">"长江边的孤独诗篇"</p>
+          <p class="spot-reason">避开一二期的热闹人群，三期深处有一片无人打扰的野生芦苇荡。长江的货船缓缓驶过，江风裹着水汽扑面。这里没有精致的造景——只有野趣、空旷和自然给你的呼吸感。</p>
+          <div class="spot-detail">
+            <p class="spot-detail-label">📸 独家机位</p>
+            <p>走到江滩三期最深处，找一丛茂密的芦苇，让模特背对镜头面向江面。夕阳逆光下，芦苇的轮廓会镶上一层金边。岸边有一艘废弃的小船，坐在船头侧脸看向远方，情绪感直接拉满。</p>
+          </div>
+          <div class="spot-detail">
+            <p class="spot-detail-label">💡 实用贴士</p>
+            <p>必须下午 4 点后去！光线柔和且蚊子较少。秋季（10-11月）芦苇最美。江滩停车场位置充足，自驾友好。建议穿长袖长裤防蚊虫。</p>
+          </div>
+          <div class="spot-cta">
+            <span class="micro-cta" onclick="openCtaModal(event)">还想知道更多野趣秘境？联系我们获取完整清单 →</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 工业/废墟类景点 -->
+      <!-- 来源 Skill: niche-spot-recommender → 风格匹配：工业/废墟 -->
+      <article class="spot-card fade-in" data-category="industrial">
+        <div class="spot-image" style="background: url('images/spot-bridge.jpg') center/cover no-repeat;">
+          <span class="spot-style-tag">工业 · 废墟</span>
+        </div>
+        <div class="spot-body">
+          <h3 class="spot-name serif">📍 杨泗港长江大桥 · 桥下空间</h3>
+          <p class="spot-alias">"武汉版布鲁克林大桥"</p>
+          <p class="spot-reason">鲜有游客踏足的工业美学圣地。巨大的橙色钢结构在头顶交错，阳光透过桁架切割成几何光影。桥下的江滩空旷开阔，货轮的汽笛声从远处传来——冷峻又浪漫。</p>
+          <div class="spot-detail">
+            <p class="spot-detail-label">📸 独家机位</p>
+            <p>站在桥墩下方仰拍，利用钢结构做前景框架，人物居中缩小——营造渺小感和空间张力。或者走到江边的碎石滩，以整座大桥为背景，拍出工业风的辽阔感。</p>
+          </div>
+          <div class="spot-detail">
+            <p class="spot-detail-label">💡 实用贴士</p>
+            <p>阴天或日落后的蓝调时刻最出片（避免正午强光）。建议穿深色极简风，不要花哨图案。地铁6号线到前进村站后打车 5 分钟可达。</p>
+          </div>
+          <div class="spot-cta">
+            <span class="micro-cta" onclick="openCtaModal(event)">对工业风有兴趣？我们有更多废墟级秘密地点 →</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 现代/极简类景点 -->
+      <!-- 来源 Skill: niche-spot-recommender → 风格匹配：现代/极简 -->
+      <article class="spot-card fade-in" data-category="modern">
+        <div class="spot-image" style="background: url('images/spot-museum.jpg') center/cover no-repeat;">
+          <span class="spot-style-tag">现代 · 极简</span>
+        </div>
+        <div class="spot-body">
+          <h3 class="spot-name serif">📍 琴台美术馆</h3>
+          <p class="spot-alias">"城市上空的银色波浪"</p>
+          <p class="spot-reason">建筑本身就是一件艺术品。银色的曲面屋顶如梯田般层叠起伏，极简的几何线条与天空形成干净构图。不是传统意义上的"景点"，但出片率极高——每一帧都像建筑杂志的封面。</p>
+          <div class="spot-detail">
+            <p class="spot-detail-label">📸 独家机位</p>
+            <p>登上屋顶平台，从高处俯拍银色的曲线与天空。人物站在两条曲线交汇处的平台上，穿纯黑或纯白色衣服，形成强烈的色彩对比。馆内的旋转楼梯也是绝佳机位。</p>
+          </div>
+          <div class="spot-detail">
+            <p class="spot-detail-label">💡 实用贴士</p>
+            <p>需提前在公众号预约（免费）。人少的工作日上午最佳。馆内禁止闪光灯但可以拍摄。建议搭配极简穿搭——全黑西装或白色连衣裙都很有气场。</p>
+          </div>
+          <div class="spot-cta">
+            <span class="micro-cta" onclick="openCtaModal(event)">预约你的专属摄影路线 →</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 复古/人文：古德寺 -->
+      <!-- 来源 Skill: niche-spot-recommender → 示例 2 -->
+      <article class="spot-card fade-in" data-category="vintage">
+        <div class="spot-image" style="background: url('images/spot-gude.jpg') center/cover no-repeat;">
+          <span class="spot-style-tag">复古 · 人文</span>
+        </div>
+        <div class="spot-body">
+          <h3 class="spot-name serif">📍 古德寺 · 圆通宝殿回廊</h3>
+          <p class="spot-alias">"武汉的吴哥窟"</p>
+          <p class="spot-reason">虽然是热门打卡地，但大多数人只挤在大殿前拍一张就匆匆离去。真正的精华藏在侧面的圆通宝殿回廊——欧式、中式和缅式建筑混搭的柱廊间，光影打在立柱上，像极了东南亚的古老庙宇。</p>
+          <div class="spot-detail">
+            <p class="spot-detail-label">📸 独家机位</p>
+            <p>不要去大殿前排队。去侧面的圆通宝殿回廊，让模特站在两根立柱之间，利用柱廊的透视营造纵深感。下午 3 点的阳光穿过回廊，刚好打在人物侧脸。</p>
+          </div>
+          <div class="spot-detail">
+            <p class="spot-detail-label">💡 实用贴士</p>
+            <p>穿着纯色（黑或白）最出片——过于花哨的衣服会与复杂建筑花纹冲突。门票 8 元。下午 2-4 点回廊人最少，大部分游客集中在上午。</p>
+          </div>
+          <div class="spot-cta">
+            <span class="micro-cta" onclick="openCtaModal(event)">想要完整的复古风拍摄路线？加微信获取 →</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 自然/野趣：涨渡湖 -->
+      <article class="spot-card fade-in" data-category="nature">
+        <div class="spot-image" style="background: url('images/spot-forest.jpg') center/cover no-repeat;">
+          <span class="spot-style-tag">自然 · 野趣</span>
+        </div>
+        <div class="spot-body">
+          <h3 class="spot-name serif">📍 涨渡湖水上森林</h3>
+          <p class="spot-alias">"武汉的亚马逊"</p>
+          <p class="spot-reason">距离市区约 1 小时车程的秘境，成片的水杉笔直地长在水中，划船穿行其间仿佛进入了另一个世界。水面如镜，倒映着蓝天和树干，静谧得只听得见桨声和鸟鸣。</p>
+          <div class="spot-detail">
+            <p class="spot-detail-label">📸 独家机位</p>
+            <p>租一艘小船划到水杉林的中央，从船上低角度拍摄——水面倒影和笔直树干构成完美的对称构图。秋冬季节水杉变红，色彩层次更加丰富。</p>
+          </div>
+          <div class="spot-detail">
+            <p class="spot-detail-label">💡 实用贴士</p>
+            <p>建议自驾或包车前往，公共交通不便。清晨或傍晚光线最好，避开周末（本地人会多一些）。划船需注意安全，建议由我们的向导陪同。</p>
+          </div>
+          <div class="spot-cta">
+            <span class="micro-cta" onclick="openCtaModal(event)">安排专车接送 + 向导服务？立即咨询 →</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PHOTOGRAPHY GUIDE (摄影攻略) ==================== -->
+<!-- 调用 Skill: photo-spot-selector -->
+<section class="section photo-guide" id="photo-guide">
+  <div class="section-inner">
+    <span class="section-label">✦ 摄影攻略</span>
+    <h2 class="section-title serif">在武汉，怎么拍才好看？</h2>
+    <p class="section-subtitle">
+      不同风格需要不同的场景、光线和穿搭。选择你喜欢的摄影风格，我们会告诉你最佳机位、穿搭建议和黄金拍摄时间。
+    </p>
+
+    <!-- 风格筛选器：映射 photo-spot-selector 的场景分类 -->
+    <div class="filter-bar" id="photoFilters">
+      <button class="filter-chip active" data-filter="all">全部风格</button>
+      <button class="filter-chip" data-filter="french">法式复古 · 电影感</button>
+      <button class="filter-chip" data-filter="japanese">日系清新 · 海边既视感</button>
+      <button class="filter-chip" data-filter="moody">情绪大片 · 孤独感</button>
+    </div>
+
+    <div class="style-grid" id="photoGrid">
+      <!-- 法式复古/电影感 -->
+      <!-- 来源 Skill: photo-spot-selector → 场景 A -->
+      <article class="style-card fade-in" data-category="french">
+        <div class="style-image" style="background: url('images/style-french.jpg') center/cover no-repeat;"></div>
+        <div class="style-body">
+          <h3 class="style-name serif">🎬 法式复古 · 电影感</h3>
+          <p class="style-subtitle">"假装在巴黎左岸"</p>
+          <div class="style-info">
+            <p class="style-info-label">📍 推荐地点</p>
+            <p>黎黄陂路、洞庭街、青岛路、合作路——汉口租界区的每一条梧桐小巷都自带法式滤镜。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">📸 最佳机位</p>
+            <p>找一面有斑驳痕迹的红砖墙，或选一条梧桐树影覆盖的街道，抓拍行走的背影。巴公房子对面的小巷子里，利用夕阳侧逆光让头发丝发光。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">👗 穿搭指南</p>
+            <p>贝雷帽 + 卡其风衣 + 格纹围巾 + 深色口红。手里拿一份旧报纸或一束干花做道具，法式文艺感瞬间拉满。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">☀️ 光影建议</p>
+            <p>下午 3 点 - 5 点，阳光穿过梧桐叶洒下斑驳光影，是最佳拍摄窗口。避免正午顶光，阴天反而更有复古氛围。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 日系清新 -->
+      <!-- 来源 Skill: photo-spot-selector → 场景 B -->
+      <article class="style-card fade-in" data-category="japanese">
+        <div class="style-image" style="background: url('images/style-japanese.jpg') center/cover no-repeat;"></div>
+        <div class="style-body">
+          <h3 class="style-name serif">☁️ 日系清新 · 海边既视感</h3>
+          <p class="style-subtitle">"在江城的海风中奔跑"</p>
+          <div class="style-info">
+            <p class="style-info-label">📍 推荐地点</p>
+            <p>武汉关轮渡（1.5元票价）、汉口江滩三期、东湖落雁景区——谁说武汉不能拍出镰仓的感觉？</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">📸 最佳机位</p>
+            <p>轮渡二楼靠窗位置，拍江面海鸥（冬季）和远处的长江大桥。江滩三期的大草坪和长椅——模特坐在长椅上，背景是江水和经过的货船，画面干净通透。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">👗 穿搭指南</p>
+            <p>白色衬衫 + 浅蓝牛仔裤 + 帆布鞋，或者米色亚麻长裙 + 草帽。避免大红大紫和大面积印花，整体色调以"低饱和、高明度"为原则。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">☀️ 光影建议</p>
+            <p>晴天下午 4 点后——阳光开始变得温柔。或者日落前 30 分钟的黄金时段，逆光拍摄让整个人被柔光包围。避免阴天拍摄（会显得灰暗沉闷）。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 情绪大片/孤独感 -->
+      <!-- 来源 Skill: photo-spot-selector → 场景 C -->
+      <article class="style-card fade-in" data-category="moody">
+        <div class="style-image" style="background: url('images/style-moody.jpg') center/cover no-repeat;"></div>
+        <div class="style-body">
+          <h3 class="style-name serif">🌑 情绪大片 · 孤独感</h3>
+          <p class="style-subtitle">"在巨大的建筑里，找到你最小的轮廓"</p>
+          <div class="style-info">
+            <p class="style-info-label">📍 推荐地点</p>
+            <p>琴台美术馆（建筑线条）、杨泗港大桥下（橙色工业结构）、汉阳造非商业区——这些地点的共同特征是：巨大、空旷、几何感强。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">📸 最佳机位</p>
+            <p>利用建筑的巨大几何线条做前景框架，将人物缩小在画面的一角或中央——强烈的尺度对比本身就是情绪。琴台美术馆的银色曲面、杨泗港桥下的桁架阴影都是天然构图工具。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">👗 穿搭指南</p>
+            <p>全黑或全白，极简剪裁，没有任何复杂图案或 Logo。衣服的质感比款式更重要——毛呢大衣、垂感阔腿裤会更出效果。配黑色宽檐帽加分。</p>
+          </div>
+          <div class="style-info">
+            <p class="style-info-label">☀️ 光影建议</p>
+            <p>阴天最适合情绪片——均匀的散射光让人物和建筑的质感最大化。或者日落后 20 分钟的蓝调时刻，天空呈现深邃的蓝色，配合城市灯光开始亮起。</p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- CTA 植入点：摄影攻略观看后自然引导 -->
+    <!-- 调用 Skill: lead-capture-closing → 场景 1 + 场景 2 结合 -->
+    <div class="cta-inline fade-in">
+      <p>
+        <strong>📸 我们的旅拍定制服务了解一下？</strong> 以上所有机位，我们的专业摄影师都帮你踩好了。你只需要负责美，路线、机位、穿搭建议，我们来搞定。
+      </p>
+      <a href="#" class="btn btn-primary" onclick="openCtaModal(event)">预约旅拍咨询</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ (常见问题) ==================== -->
+<!-- 调用 Skill: faq-handler -->
+<section class="section faq" id="faq">
+  <div class="section-inner">
+    <span class="section-label">✦ 常见问题</span>
+    <h2 class="section-title serif">你关心的，我们都想好了</h2>
+    <p class="section-subtitle">
+      点击每个问题查看详细解答。如果还有其他疑问，欢迎直接联系我们。
+    </p>
+
+    <div class="faq-list">
+      <!-- FAQ 1: 价格 -->
+      <!-- 来源 Skill: faq-handler → 关于价格 -->
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span>"你们的定制服务会不会很贵？比普通跟团游高多少？"</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <p>亲，我非常理解您在预算上的考量。确实，市面上的标准化跟团游价格更低。但我们的价格是建立在<strong>纯玩无购物、全程本地向导陪同、拒绝隐形消费</strong>的基础上的。比如我们会带您去吃本地人排队的小馆子，而不是游客团餐；我们会为您预留充足的拍照时间，而不是走马观花地赶场。对于一次难得的假期来说，<strong>好的体验才是最大的省钱</strong>，您说对吗？</p>
+        </div>
+      </div>
+
+      <!-- FAQ 2: 定制灵活性 -->
+      <!-- 来源 Skill: faq-handler → 关于定制细节 -->
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span>"路线可以完全按照我的想法来吗？能睡到自然醒吗？"</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <p>当然可以！<strong>"定制"的核心就是听您的。</strong>如果您想睡到自然醒，我们就把行程安排在下午；如果您想去某个小众的咖啡馆发呆一下午，我们就为您安排。我们的路线只是建议，您才是旅行的主角，随时可以根据您的心情调整节奏。旅行不是完成任务——我们比您更在意这份松弛感。</p>
+        </div>
+      </div>
+
+      <!-- FAQ 3: 安全 -->
+      <!-- 来源 Skill: faq-handler → 关于安全 -->
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span>"一个人出行安全吗？带老人小孩方便吗？"</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <p>安全是我们最看重的一点。首先，我们会为每一位出行的客人购买<strong>高额旅游意外险</strong>。其次，我们合作的车辆和司机都是经过严格筛选的正规营运资质，绝不使用黑车。最后，在您旅行的全程，我们都有<strong>24小时紧急联系人</strong>在线，无论是迷路还是突发状况，我们都能第一时间响应。带老人小孩出行更不用担心——我们的向导有丰富的家庭出游经验，会主动帮忙照顾。</p>
+        </div>
+      </div>
+
+      <!-- FAQ 4: 退改政策 -->
+      <!-- 来源 Skill: faq-handler → 关于退改政策 -->
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span>"如果临时有事去不了，能退款吗？"</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <p>我们支持灵活退改，请您放心。具体规则是：<br><br>
+          ① 出发前 <strong>7天以上</strong> 申请退款，<strong>全额退还定金</strong>。<br>
+          ② 出发前 <strong>3-7天</strong> 申请，退还 <strong>50% 定金</strong>（用于覆盖部分策划成本）。<br>
+          ③ 出发前 <strong>3天内</strong>，因我们需要为您预留车辆和向导，定金无法退还，但<strong>可以为您改期保留一年</strong>。<br><br>
+          具体条款会在我们的服务协议中写清楚，保障双方权益。我们尽可能人性化处理，因为旅行的本质是开心，不是纠纷。</p>
+        </div>
+      </div>
+
+      <!-- FAQ 5: 摄影服务 -->
+      <!-- 来源 Skill: faq-handler → 关于服务细节（补充） -->
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span>"摄影服务包含什么？可以只订摄影不订行程吗？"</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="faq-a">
+          <p>我们的摄影服务包括：<strong>专业摄影师跟拍（1-3小时可选）+ 精修出片 + 穿搭与机位指导</strong>。您可以只订摄影服务，也可以选择"行程+摄影"的打包方案（性价比更高）。我们合作的摄影师都深耕武汉本地，对每个小众机位的光线和时间段了如指掌——这比临时找摄影师靠谱得多。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA: FAQ 回答完后自然引导 -->
+    <!-- 调用 Skill: lead-capture-closing → 场景 3 "对话即将结束，但未成交" -->
+    <div class="cta-inline fade-in" style="margin-top: 40px;">
+      <p>
+        <strong>还有其他问题？</strong> 不如直接和我们聊一聊——没有义务下单，只是想帮你把行程理清楚。首次咨询还有<strong>限时旅拍优惠</strong>可以领取。
+      </p>
+      <a href="#" class="btn btn-primary" onclick="openCtaModal(event)">开始免费咨询</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABOUT (关于我们) ==================== -->
+<!-- 调用 Skill: 无（品牌介绍，custom-travel-planner 角色定义的延伸） -->
+<section class="section about" id="about">
+  <div class="section-inner about-content">
+    <span class="section-label">✦ 关于我们</span>
+    <h2 class="section-title serif">不是旅行社，是你的本地朋友</h2>
+    <p>
+      <strong>栖野旅行</strong>诞生于一个简单的念头：为什么每一次旅行，都像是在完成一张"打卡清单"？我们不相信标准化的景区、不信任千篇一律的攻略、不认可走马观花的节奏。
+    </p>
+    <p>
+      我们是一群深耕武汉的<strong>在地探索家、旅拍摄影师和美食猎人</strong>。比起带你去黄鹤楼数人头，我们更想让你在黎黄陂路的梧桐树下喝一杯咖啡，在古德寺的回廊里看一场光影，在江边码头的长椅上等一场落日——然后用最专业的镜头，把这些瞬间变成你能带走的记忆。
+    </p>
+    <ul class="about-values-list">
+      <li>🚫 拒绝游客陷阱</li>
+      <li>🗺️ 纯在地路线</li>
+      <li>📷 专业旅拍加持</li>
+      <li>🤝 1对1专属定制</li>
+      <li>💬 24小时贴心响应</li>
+      <li>🔒 全程0隐形消费</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== FOOTER (页脚 + CTA) ==================== -->
+<!-- 调用 Skill: lead-capture-closing → 页脚是最后的转化阵地 -->
+<footer class="footer" id="footer-cta">
+  <div class="footer-inner">
+    <!-- 最后转化 -->
+    <!-- 来源 Skill: lead-capture-closing → 场景 1 + 场景 4 结合 -->
+    <div class="footer-cta" id="footerCtaTarget">
+      <h4 class="serif">准备好发现一个不一样的武汉了吗？</h4>
+      <p>留下联系方式，我们将为你发送 <strong>《武汉隐秘书境 · 电子地图》</strong>——包含 20 个小众景点、独家机位和本地人的私房推荐。</p>
+      <a href="#" class="btn btn-primary" onclick="openCtaModal(event)">立即领取地图</a>
+      <div class="footer-social">
+        <span>微信：qiyetravel_wuhan</span>
+        <span>电话：188-8888-8888</span>
+      </div>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand serif">栖野 · 旅行</p>
+        <p class="footer-desc">
+          武汉高端定制旅行品牌。专注小众秘境探索与专业旅拍定制。<br>
+          不卖行程，只讲属于你的故事。
+        </p>
+      </div>
+      <div>
+        <p class="footer-heading">快速导航</p>
+        <ul class="footer-links">
+          <li><a href="#home">首页</a></li>
+          <li><a href="#cases">真实案例</a></li>
+          <li><a href="#spots">小众景点</a></li>
+          <li><a href="#photo-guide">摄影攻略</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-heading">联系方式</p>
+        <ul class="footer-links">
+          <li><a href="#" onclick="openCtaModal(event)">微信：qiyetravel_wuhan</a></li>
+          <li><a href="#" onclick="openCtaModal(event)">电话：188-8888-8888</a></li>
+          <li><a href="#" onclick="openCtaModal(event)">在线咨询</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 栖野旅行 QIYO TRAVEL. 每一次出发，都值得被认真对待。</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== CTA MODAL (转化弹窗) ==================== -->
+<!-- 调用 Skill: lead-capture-closing → 场景 1（核心索要微信/联系方式） -->
+<div class="modal-overlay" id="ctaModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCtaModal()">&times;</button>
+    <h3 class="serif">开启你的武汉专属定制</h3>
+    <p>很高兴你想了解更多！🎉 留下联系方式，我们会在 <strong>24小时内</strong> 为你发送一份<strong>免费的初步行程方案</strong>，同时附赠《武汉隐秘书境 · 电子地图》——没有任何费用，纯粹想帮你把行程理清楚。</p>
+    <form id="ctaForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="ctaName">怎么称呼你？</label>
+        <input type="text" id="ctaName" placeholder="你的名字或昵称" required>
+      </div>
+      <div class="form-group">
+        <label for="ctaContact">微信 / 手机号</label>
+        <input type="text" id="ctaContact" placeholder="微信号或手机号码" required>
+      </div>
+      <div class="form-group">
+        <label for="ctaNote">有什么想提前告诉我们的？（选填）</label>
+        <input type="text" id="ctaNote" placeholder="比如：出行时间、人数、偏好的风格...">
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">提交 · 领取免费方案</button>
+    </form>
+    <p class="form-note">
+      你的信息仅用于行程沟通，不会用于任何其他用途。<br>
+      没有强制消费，随时可以退出。
+    </p>
+  </div>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+  // ===== Navigation scroll effect =====
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  });
+
+  // ===== Mobile nav toggle =====
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  const navCta = document.getElementById('navCta');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    navCta.classList.toggle('mobile-show');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navCta.classList.remove('mobile-show');
+    });
+  });
+
+  // ===== Spot filter =====
+  // 调用 Skill: niche-spot-recommender → 风格匹配交互
+  const spotFilters = document.getElementById('spotFilters');
+  const spotCards = document.querySelectorAll('#spotGrid .spot-card');
+  spotFilters.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('filter-chip')) return;
+    spotFilters.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    const filter = e.target.dataset.filter;
+    spotCards.forEach(card => {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  // ===== Photo guide filter =====
+  // 调用 Skill: photo-spot-selector → 风格锁定交互
+  const photoFilters = document.getElementById('photoFilters');
+  const photoCards = document.querySelectorAll('#photoGrid .style-card');
+  photoFilters.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('filter-chip')) return;
+    photoFilters.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    const filter = e.target.dataset.filter;
+    photoCards.forEach(card => {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  // ===== FAQ accordion =====
+  // 调用 Skill: faq-handler
+  function toggleFaq(item) {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // ===== CTA Modal =====
+  // 调用 Skill: lead-capture-closing → 场景 1（索要联系方式）+ 场景 4（降低决策门槛）
+  const modal = document.getElementById('ctaModal');
+  function openCtaModal(e) {
+    if (e) e.preventDefault();
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCtaModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeCtaModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCtaModal();
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('ctaName').value.trim();
+    const contact = document.getElementById('ctaContact').value.trim();
+    if (!name || !contact) return;
+    // 模拟提交成功
+    const form = document.getElementById('ctaForm');
+    form.innerHTML = `
+      <div style="text-align:center;padding:20px 0;">
+        <p style="font-size:1.5rem;margin-bottom:12px;">🎉</p>
+        <p style="font-size:1.1rem;font-weight:600;margin-bottom:8px;">提交成功！</p>
+        <p style="font-size:0.9rem;color:var(--ink-light);line-height:1.7;">
+          感谢你的信任，<strong>${escapeHtml(name)}</strong>。<br>
+          我们会在 <strong>24小时内</strong> 通过微信/电话联系你，<br>
+          为你送上免费的初步方案和《武汉隐秘书境 · 电子地图》。<br><br>
+          如果着急，也可以直接添加微信：<strong>qiyetravel_wuhan</strong>
+        </p>
+      </div>
+    `;
+  }
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ===== Scroll fade-in animation =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
