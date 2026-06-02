@@ -295,7 +295,7 @@ function handleCtaSubmit(e) {
         感谢你的信任，<strong>${escapeHtml(name)}</strong>。<br>
         我们会在 <strong>24小时内</strong> 联系你，<br>
         发送免费方案和《武汉隐秘书境 · 电子地图》。<br><br>
-        急的话直接加微信：<strong>qiyetravel_wuhan</strong>
+        急的话直接加微信：<strong>Shmily_0zz</strong>
       </p>
     </div>
   `;
