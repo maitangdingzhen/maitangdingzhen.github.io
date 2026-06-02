@@ -1,15 +1,16 @@
 // js/chat.js
-// 栖野旅行 AI 助手 — 前端聊天逻辑
-// 部署后，将下方的 API_URL 替换为实际函数地址
+// 栖野旅行 AI 助手 — 多智能体架构前端
+// 编排器自动路由到 6 个专业 Agent，界面实时显示当前激活的 Agent
 
-// ===== 配置 (部署 Netlify/Vercel 后修改此 URL) =====
+// ===== 配置 =====
 const API_URL = 'https://lambent-moxie-cd41dc.netlify.app/api/chat';
 const DEMO_MODE = false;
 
 // ===== 状态 =====
 const state = {
-  history: [],       // [{ role: 'user'|'assistant', content: '...' }]
-  isLoading: false
+  history: [],           // [{ role: 'user'|'assistant', content: '...' }]
+  isLoading: false,
+  currentAgent: null     // 当前激活的 Agent ID
 };
 
 // ===== DOM 元素 =====
@@ -17,6 +18,71 @@ const chatContainer = document.getElementById('chatContainer');
 const chatInput = document.getElementById('chatInput');
 const sendBtn = document.getElementById('sendBtn');
 const welcomeMsg = document.getElementById('welcomeMsg');
+
+// ===== Agent 信息映射（与后端 AGENTS 保持一致） =====
+const AGENT_INFO = {
+  travel_planner:  { name: '路线规划师',   icon: '🗺️' },
+  spot_recommender:{ name: '在地探索家',   icon: '🔍' },
+  photo_advisor:   { name: '旅拍策划师',   icon: '📷' },
+  faq_handler:     { name: '客服专家',     icon: '💬' },
+  case_storyteller:{ name: '首席故事官',   icon: '📖' },
+  sales_closer:    { name: '销售顾问',     icon: '🤝' }
+};
+
+// ===== Agent 指示器（动态创建，不依赖 HTML 中是否已有此元素） =====
+let agentBadge = document.getElementById('agentBadge');
+if (!agentBadge) {
+  agentBadge = document.createElement('div');
+  agentBadge.id = 'agentBadge';
+  agentBadge.className = 'agent-badge';
+  agentBadge.innerHTML = '<span class="agent-icon" id="agentBadgeIcon">🤖</span> <span class="agent-name" id="agentBadgeName">AI 助手</span>';
+  document.body.appendChild(agentBadge);
+}
+const agentBadgeIcon = document.getElementById('agentBadgeIcon');
+const agentBadgeName = document.getElementById('agentBadgeName');
+
+// ===== 注入 Agent Badge 关键样式（确保即使 chat.css 没更新也能正常显示） =====
+if (!document.getElementById('agent-badge-style')) {
+  const badgeStyle = document.createElement('style');
+  badgeStyle.id = 'agent-badge-style';
+  badgeStyle.textContent = `
+    .agent-badge{display:none;align-items:center;gap:8px;padding:8px 18px;border-radius:24px;background:#fff;border:1.5px solid #e8efe3;box-shadow:0 4px 20px rgba(0,0,0,0.06);font-size:0.82rem;color:#4a633b;position:fixed;top:76px;left:50%;transform:translateX(-50%);z-index:200;white-space:nowrap;opacity:0;transition:opacity 0.35s ease,transform 0.35s ease;}
+    .agent-badge.agent-badge-show{display:flex;opacity:1;animation:agentPopIn 0.4s cubic-bezier(0.16,1,0.3,1);}
+    @keyframes agentPopIn{from{opacity:0;transform:translateX(-50%) translateY(-12px) scale(0.92);}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}}
+  `;
+  document.head.appendChild(badgeStyle);
+}
+
+// ===== 显示 Agent 切换指示器 =====
+function showAgentBadge(agentId, agentName, agentIcon) {
+  if (!agentBadge) return;
+  if (state.currentAgent === agentId) return; // 同一 Agent，不重复提示
+
+  state.currentAgent = agentId;
+  agentBadgeIcon.textContent = agentIcon || AGENT_INFO[agentId]?.icon || '🤖';
+  agentBadgeName.textContent = (agentName || AGENT_INFO[agentId]?.name || 'AI助手') + ' 已激活';
+
+  // 清除之前的定时器
+  clearTimeout(agentBadge._timeout);
+
+  // 触发动画
+  agentBadge.style.display = 'flex';
+  agentBadge.style.opacity = '';
+  agentBadge.classList.remove('agent-badge-show');
+  void agentBadge.offsetWidth; // 强制回流，重新触发动画
+  agentBadge.classList.add('agent-badge-show');
+
+  // 3 秒后自动淡出
+  agentBadge._timeout = setTimeout(() => {
+    agentBadge.classList.remove('agent-badge-show');
+    agentBadge.style.opacity = '0';
+    setTimeout(() => {
+      if (!agentBadge.classList.contains('agent-badge-show')) {
+        agentBadge.style.display = 'none';
+      }
+    }, 350);
+  }, 3000);
+}
 
 // ===== 发送消息 =====
 async function sendMessage() {
@@ -34,27 +100,33 @@ async function sendMessage() {
   sendBtn.disabled = true;
 
   if (DEMO_MODE) {
-    // 演示模式（模拟流式输出）
     await sleep(600);
     const typingEl = showTypingIndicator();
     await sleep(800);
     typingEl.remove();
-    const responseText = getDemoResponse(text);
+    const { agentId, responseText } = getDemoResponse(text);
     const { cleanText, ctaText } = extractCta(responseText);
     addMessage('assistant', cleanText, ctaText);
     state.history.push({ role: 'assistant', content: responseText });
+    // 演示模式也显示 Agent 切换
+    const info = AGENT_INFO[agentId];
+    if (info) showAgentBadge(agentId, info.name, info.icon);
     state.isLoading = false;
     sendBtn.disabled = false;
     return;
   }
 
-  // === 正式模式 ===
+  // === 正式模式：多智能体路由 ===
   const typingEl = showTypingIndicator();
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text, history: state.history.slice(0, -1) })
+      body: JSON.stringify({
+        message: text,
+        history: state.history.slice(0, -1),
+        currentAgent: state.currentAgent   // 传递当前 Agent，辅助后端路由决策
+      })
     });
 
     if (!res.ok) {
@@ -66,6 +138,11 @@ async function sendMessage() {
     const responseText = data.content?.[0]?.text || '抱歉，我没有理解你的问题，可以换个方式说吗？';
 
     typingEl.remove();
+
+    // 显示 Agent 切换指示器
+    if (data.agent) {
+      showAgentBadge(data.agent, data.agentName, data.agentIcon);
+    }
 
     const { cleanText, ctaText } = extractCta(responseText);
     addMessage('assistant', cleanText, ctaText);
@@ -106,7 +183,6 @@ function addMessage(role, rawText, ctaText) {
     html = wrapDayCards(html);
     bubble.innerHTML = html;
 
-    // CTA 引导条
     if (ctaText) {
       const ctaBar = document.createElement('div');
       ctaBar.className = 'cta-bar';
@@ -142,7 +218,6 @@ function showError(text) {
   el.textContent = '⚠ ' + text;
   chatContainer.appendChild(el);
   scrollToBottom();
-  // 3秒后自动消失
   setTimeout(() => { if (el.parentNode) el.remove(); }, 5000);
 }
 
@@ -158,10 +233,9 @@ function extractCta(text) {
   return { cleanText: text, ctaText: null };
 }
 
-// ===== CTA 弹窗（复用首页的留资逻辑） =====
+// ===== CTA 弹窗 =====
 function openCtaModal(e) {
   if (e) e.preventDefault();
-  // 复用现有 modal 或创建简易弹窗
   let modal = document.getElementById('ctaModal');
   if (!modal) {
     modal = document.createElement('div');
@@ -182,7 +256,6 @@ function openCtaModal(e) {
         <p style="font-size:0.75rem;color:var(--ink-light);margin-top:12px;text-align:center;">你的信息仅用于行程沟通，没有强制消费。</p>
       </div>
     `;
-    // 注入简易 modal 样式
     const style = document.createElement('style');
     style.textContent = `
       .modal-overlay { position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s; }
@@ -246,10 +319,10 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// ===== 演示模式（无需后端即可展示效果） =====
+// ===== 演示模式 =====
 function getDemoResponse(text) {
   if (text.includes('拍照') || text.includes('摄影') || text.includes('复古')) {
-    return `太棒了！武汉是国内拍复古风的天花板城市 📸
+    return { agentId: 'photo_advisor', responseText: `太棒了！武汉是国内拍复古风的天花板城市 📸
 
 ## 🎞️ 复古胶片风 · 拍摄攻略
 
@@ -267,11 +340,11 @@ function getDemoResponse(text) {
 ### ☀️ 光影时间
 下午3点-5点，阳光穿过梧桐叶洒下斑驳光影——这是最佳拍摄窗口。
 
-[cta]想要完整的复古风拍摄路线和12个独家机位？加微信发你《武汉隐秘书境 · 摄影地图》📷[/cta]`;
+[cta]想要完整的复古风拍摄路线和12个独家机位？加微信发你《武汉隐秘书境 · 摄影地图》📷[/cta]` };
   }
 
   if (text.includes('吃') || text.includes('美食') || text.includes('吃货')) {
-    return `## 🍜 武汉地道美食之旅
+    return { agentId: 'spot_recommender', responseText: `## 🍜 武汉地道美食之旅
 
 作为一个武汉在地吃货，我绝对不会带你去户部巷！以下是我的私藏清单：
 
@@ -287,11 +360,11 @@ function getDemoResponse(text) {
 ### 🌃 夜宵
 - 长江轮渡坐一趟（1.5元），然后去江滩边的精酿啤酒吧喝酒看江景
 
-[cta]想要完整版《武汉苍蝇馆子地图》？20家本地人私藏店铺，加微信发你 🗺️[/cta]`;
+[cta]想要完整版《武汉苍蝇馆子地图》？20家本地人私藏店铺，加微信发你 🗺️[/cta]` };
   }
 
   // 默认：行程规划
-  return `## 🗺️ 江城旧梦——2天1晚武汉深度人文之旅
+  return { agentId: 'travel_planner', responseText: `## 🗺️ 江城旧梦——2天1晚武汉深度人文之旅
 
 > 情侣出游 · 预算约 ¥2,400（2人） · 小众 × 摄影 × 美食
 
@@ -338,7 +411,7 @@ function getDemoResponse(text) {
 - 穿搭：卡其风衣 + 贝雷帽（法式复古风）
 - Day 2 上午江滩拍情绪片（纯色连衣裙 / 白色衬衫）
 
-[cta]很高兴你看到了最后！😊 这个方案可以根据你的具体日期和偏好进一步细化。加个微信？我把《武汉隐秘书境 · 电子地图》发给你，里面还有更多不为人知的隐藏机位～[/cta]`;
+[cta]很高兴你看到了最后！😊 这个方案可以根据你的具体日期和偏好进一步细化。加个微信？我把《武汉隐秘书境 · 电子地图》发给你，里面还有更多不为人知的隐藏机位～[/cta]` };
 }
 
 // ===== 键盘快捷键 =====

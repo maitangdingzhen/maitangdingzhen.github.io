@@ -1,8 +1,8 @@
 // netlify/functions/chat.js
-// Netlify Serverless Function — 代理到 DeepSeek API（非流式）
+// Netlify Serverless Function — 多智能体架构：编排器分类意图 → 路由到专业 Agent
 // 部署后在 Netlify Dashboard 设置环境变量 DEEPSEEK_API_KEY
 
-import { SYSTEM_PROMPT } from '../../skills/index.js';
+import { classifyIntent, getAgentSystemPrompt, AGENTS } from '../../skills/index.js';
 
 export async function handler(event) {
   const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
@@ -19,7 +19,7 @@ export async function handler(event) {
     return { statusCode: 400, headers: corsHeaders(), body: JSON.stringify({ error: '请求格式错误' }) };
   }
 
-  const { message, history = [] } = body;
+  const { message, history = [], currentAgent } = body;
   if (!message || typeof message !== 'string' || !message.trim()) {
     return { statusCode: 400, headers: corsHeaders(), body: JSON.stringify({ error: '消息不能为空' }) };
   }
@@ -27,9 +27,14 @@ export async function handler(event) {
     return { statusCode: 500, headers: corsHeaders(), body: JSON.stringify({ error: 'API Key 未设置' }) };
   }
 
+  // === 多智能体路由：编排器分类意图，选择最匹配的专业 Agent ===
+  const agentId = classifyIntent(message, currentAgent);
+  const agent = AGENTS[agentId];
+  const systemPrompt = getAgentSystemPrompt(agentId);
+
   const trimmedHistory = history.slice(-20);
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: systemPrompt },
     ...trimmedHistory,
     { role: 'user', content: message }
   ];
@@ -66,7 +71,11 @@ export async function handler(event) {
         id: data.id,
         content: [{ type: 'text', text: data.choices?.[0]?.message?.content || '' }],
         stop_reason: data.choices?.[0]?.finish_reason || 'stop',
-        model: data.model
+        model: data.model,
+        // 多智能体元数据
+        agent: agentId,
+        agentName: agent.name,
+        agentIcon: agent.icon
       })
     };
   } catch {

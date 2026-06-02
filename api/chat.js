@@ -1,8 +1,8 @@
 // api/chat.js
-// Vercel Serverless Function — 代理前端请求到 DeepSeek API
+// Vercel Serverless Function — 多智能体架构：编排器分类意图 → 路由到专业 Agent
 // 部署后在 Vercel Dashboard 设置环境变量 DEEPSEEK_API_KEY
 
-import { SYSTEM_PROMPT } from '../skills/index.js';
+import { AGENTS, classifyIntent, getAgentSystemPrompt } from '../skills/index.js';
 
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://maitangdingzhen.github.io';
@@ -13,11 +13,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // 预检请求
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: '仅支持 POST 请求' });
 
-  const { message, history = [] } = req.body || {};
+  const { message, history = [], currentAgent } = req.body || {};
   if (!message || typeof message !== 'string' || !message.trim()) {
     return res.status(400).json({ error: '消息不能为空' });
   }
@@ -26,12 +25,16 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: '服务配置错误：API Key 未设置', code: 'NO_API_KEY' });
   }
 
+  // === 多智能体路由：编排器分类意图，选择最匹配的专业 Agent ===
+  const agentId = classifyIntent(message, currentAgent);
+  const agent = AGENTS[agentId];
+  const systemPrompt = getAgentSystemPrompt(agentId);
+
   // 裁剪历史消息（保留最近 24 条 = 12 轮对话）
   const trimmedHistory = history.slice(-24);
 
-  // 构建消息列表：system prompt + 历史 + 当前消息
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: systemPrompt },
     ...trimmedHistory,
     { role: 'user', content: message }
   ];
@@ -68,14 +71,17 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-
-    // 将 DeepSeek 响应转换为前端期望的格式
     const deepseekContent = data.choices?.[0]?.message?.content || '';
+
     return res.status(200).json({
       id: data.id,
       content: [{ type: 'text', text: deepseekContent }],
       stop_reason: data.choices?.[0]?.finish_reason || 'stop',
-      model: data.model
+      model: data.model,
+      // 多智能体元数据 — 前端据此展示当前激活的 Agent
+      agent: agentId,
+      agentName: agent.name,
+      agentIcon: agent.icon
     });
 
   } catch (error) {
